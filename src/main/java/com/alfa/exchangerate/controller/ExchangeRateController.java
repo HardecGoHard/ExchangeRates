@@ -1,37 +1,35 @@
 package com.alfa.exchangerate.controller;
 
-import com.alfa.exchangerate.dto.CurrencyDto;
 import com.alfa.exchangerate.service.ExchangeRatesService;
-import com.alfa.exchangerate.util.ExchangeCalculateUtil;
-import org.springframework.beans.factory.annotation.Value;
+import com.alfa.exchangerate.service.GiphyService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-@RestController
-@RequestMapping
+@Controller
+@RequestMapping("/exchange")
 public class ExchangeRateController {
     private final ExchangeRatesService exchangeRatesService;
+    private final GiphyService giphyService;
 
-    public ExchangeRateController(ExchangeRatesService apiOpenExchangeRates) {
+    public ExchangeRateController(ExchangeRatesService apiOpenExchangeRates, GiphyService giphyService) {
         this.exchangeRatesService = apiOpenExchangeRates;
+        this.giphyService = giphyService;
     }
 
     @GetMapping("/{currencyId}")
-    public String getExchangeGif(@PathVariable("currencyId") String currencyId) {
-
-        return comparingTheCurrentAndYesterdayDay(currencyId);
-    }
-    private String comparingTheCurrentAndYesterdayDay(String currencyId){
-        if (exchangeRatesService.isExchangeRateIsInc(currencyId)){
-            return "You are RICH!!!";
+    public String getExchangeGif(@PathVariable("currencyId") String currencyId, Model model) {
+        currencyId = currencyId.toUpperCase();
+        if (exchangeRatesService.isExchangeRateIsInc(currencyId)) {
+            model.addAttribute("text", "You are rich!");
+            model.addAttribute("gifurl", giphyService.getRandomGifByTag("Rich").getDataGifDto().getUrl());
+            return "main_page";
         }
-        return "Not stonks....";
+        model.addAttribute("text", "You are broken!");
+        model.addAttribute("gifurl", giphyService.getRandomGifByTag("Broke").getDataGifDto().getUrl());
+        return "main_page";
     }
-
 }
