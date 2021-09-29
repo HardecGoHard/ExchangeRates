@@ -1,23 +1,22 @@
 package com.alfa.exchangerate.controller;
 
 import com.alfa.exchangerate.service.ExchangeRatesService;
-import com.alfa.exchangerate.service.GiphyService;
+import com.alfa.exchangerate.service.GifService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping("/exchange")
 public class ExchangeRateController {
     private final ExchangeRatesService exchangeRatesService;
-    private final GiphyService giphyService;
+    private final GifService gifService;
 
-    public ExchangeRateController(ExchangeRatesService apiOpenExchangeRates, GiphyService giphyService) {
+    public ExchangeRateController(ExchangeRatesService apiOpenExchangeRates, GifService gifService) {
         this.exchangeRatesService = apiOpenExchangeRates;
-        this.giphyService = giphyService;
+        this.gifService = gifService;
     }
 
     @GetMapping("/{currencyId}")
@@ -25,11 +24,11 @@ public class ExchangeRateController {
         currencyId = currencyId.toUpperCase();
         if (exchangeRatesService.isExchangeRateIsInc(currencyId)) {
             model.addAttribute("text", "You are rich!");
-            model.addAttribute("gifurl", giphyService.getRandomGifByTag("Rich").getDataGifDto().getUrl());
+            model.addAttribute("gifurl", gifService.getRandomGifByTag("rich").getGifDto().getUrl());
             return "main_page";
         }
-        model.addAttribute("text", "You are broken!");
-        model.addAttribute("gifurl", giphyService.getRandomGifByTag("Broke").getDataGifDto().getUrl());
+        model.addAttribute("text", "You are broke!");
+        model.addAttribute("gifurl", gifService.getRandomGifByTag("broke").getGifDto().getUrl());
         return "main_page";
     }
 }

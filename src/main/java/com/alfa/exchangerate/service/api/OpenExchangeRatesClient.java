@@ -19,4 +19,8 @@ public interface OpenExchangeRatesClient {
     CurrencyDto getBaseCurrencyRateByDate(@PathVariable String date, @RequestParam("app_id") String appId,
                                           @RequestParam("base")String base,
                                           @RequestParam("symbols") String currencyCode);
+
+    @GetMapping("${open-exchange.api.historical}/{date}")
+    CurrencyDto getUSDRateByDate(@PathVariable String date, @RequestParam("app_id") String appId,
+                                          @RequestParam("symbols") String currencyCode);
 }

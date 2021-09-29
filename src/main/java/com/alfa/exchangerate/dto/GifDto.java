@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DataGifDto {
+public class GifDto {
     @JsonProperty("type")
     String type;
     @JsonProperty("image_original_url")

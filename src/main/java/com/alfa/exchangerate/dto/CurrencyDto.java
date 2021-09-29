@@ -10,8 +10,6 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyDto {
-    @JsonProperty("timestamp")
-    private Long timestamp;
     @JsonProperty("base")
     private String base;
     @JsonProperty("rates")

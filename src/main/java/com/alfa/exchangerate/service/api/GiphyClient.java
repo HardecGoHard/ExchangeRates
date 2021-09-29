@@ -1,6 +1,5 @@
 package com.alfa.exchangerate.service.api;
 
-import com.alfa.exchangerate.dto.DataGifDto;
 import com.alfa.exchangerate.dto.GiphyDataDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
